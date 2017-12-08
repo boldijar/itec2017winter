@@ -52,4 +52,8 @@
     <string name="people_per_session">%1$d people / session</string>
     <string name="no_course_registrations">You are currently not registered to any course</string>
 
+    <string name="invalid_login">Please use valid emails and non null passwords.</string>
+    <string name="invalid_register">Please use valid emails and non null passwords and name.</string>
+    <string name="fblogin">Login with Facebook</string>
+
 </resources>

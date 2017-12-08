@@ -19,4 +19,9 @@ public class SystemUtils {
         NetworkInfo activeNetwork = mConnectivityManager.getActiveNetworkInfo();
         return activeNetwork == null || !activeNetwork.isConnectedOrConnecting();
     }
+
+
+    public static boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 }

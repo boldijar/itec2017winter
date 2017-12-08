@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.gym.app.R;
+import com.gym.app.data.SystemUtils;
 import com.gym.app.fragments.BaseFragment;
 
 import butterknife.BindView;
@@ -45,6 +46,12 @@ public class LoginFragment extends BaseFragment {
 
     @OnClick(R.id.login_button)
     void onLoginButtonClick() {
+        String email = mEmailInput.getText().toString();
+        String password = mPasswordInput.getText().toString();
+        if (!SystemUtils.isEmailValid(email) || password.length() == 0) {
+            showMessage(R.string.invalid_login);
+            return;
+        }
         ((AuthenticationActivity) getActivity()).doLogin(mEmailInput.getText().toString(),
                 mPasswordInput.getText().toString());
     }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gym.app.R;
+import com.gym.app.data.SystemUtils;
 import com.gym.app.fragments.BaseFragment;
 import com.gym.app.parts.authentication.AuthenticationNavigation;
 
@@ -57,6 +58,13 @@ public class RegisterFragment extends BaseFragment implements RegisterView {
 
     @OnClick(R.id.register_button)
     void onRegisterClick() {
+        String email = mEmailInput.getText().toString();
+        String password = mPasswordInput.getText().toString();
+        String username = mNameInput.getText().toString();
+        if (!SystemUtils.isEmailValid(email) || password.length() == 0 || username.length() == 0) {
+            showMessage(R.string.invalid_register);
+            return;
+        }
         mRegisterPresenter.register(mNameInput.getText().toString(), mEmailInput.getText().toString(),
                 mPasswordInput.getText().toString());
     }
