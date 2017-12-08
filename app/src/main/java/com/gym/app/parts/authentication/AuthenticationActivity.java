@@ -11,10 +11,21 @@ import com.gym.app.R;
 import com.gym.app.activities.BaseActivity;
 import com.gym.app.activities.HomeActivity;
 import com.gym.app.data.Prefs;
-import com.gym.app.data.model.LoginResponse;
+import com.gym.app.data.model.User;
+import com.gym.app.di.InjectionHelper;
+import com.gym.app.server.ITecService;
+
+import java.util.HashMap;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class AuthenticationActivity extends BaseActivity implements AuthenticationNavigation, AuthenticationView {
@@ -30,6 +41,9 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
 
     private AuthenticationPagerAdapter mAuthenticationPagerAdapter;
     private AuthenticationPresenter mAuthenticationPresenter;
+
+    @Inject
+    ITecService mITecService;
 
     public static Intent createIntent(Context context) {
         return new Intent(context, AuthenticationActivity.class);
@@ -47,6 +61,7 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
         ButterKnife.bind(this);
+        InjectionHelper.getApplicationComponent().inject(this);
         mAuthenticationPresenter = new AuthenticationPresenter(this);
         mAuthenticationPagerAdapter = new AuthenticationPagerAdapter(getSupportFragmentManager());
         mAuthenticationViewPager.setAdapter(mAuthenticationPagerAdapter);
@@ -65,7 +80,7 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
                     applicationLogo.setScaleY(positionOffset);
                 }
 
-                applicationLogo.setRotation(positionOffset * 180);
+                applicationLogo.setRotation(positionOffset * 360);
             }
 
             @Override
@@ -81,6 +96,29 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
         if (getIntent().getBooleanExtra(ARG_INVALID_TOKEN, false)) {
             Toast.makeText(this, R.string.token_expired, Toast.LENGTH_SHORT).show();
         }
+        mITecService.getUsers().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<HashMap<String, List<HashMap<String, String>>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(HashMap<String, List<HashMap<String, String>>> stringStringHashMap) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     public void doLogin(String email, String password) {
@@ -98,8 +136,8 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
     }
 
     @Override
-    public void showLoginResponse(LoginResponse loginResponse) {
-        Prefs.Token.put(loginResponse.mToken);
+    public void showLoginResponse(User user) {
+        Prefs.User.putAsJson(user);
         startActivity(HomeActivity.createIntent(this));
         finish();
     }

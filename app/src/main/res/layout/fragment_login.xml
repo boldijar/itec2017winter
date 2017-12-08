@@ -34,7 +34,7 @@
         fontPath="fonts/Lato-Light.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="superSecretTok3n"
+        android:text="password"
         android:layout_below="@id/login_email_input"
         android:drawablePadding="@dimen/small_margin"
         android:drawableStart="@drawable/ic_key"

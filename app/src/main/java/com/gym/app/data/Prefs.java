@@ -13,7 +13,8 @@ import com.google.gson.Gson;
 
 public enum Prefs {
 
-    Token;
+    Token,
+    User;
 
     Prefs(String defaultValue) {
         mDefaultValue = defaultValue;

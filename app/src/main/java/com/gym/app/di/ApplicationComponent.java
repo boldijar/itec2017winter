@@ -4,6 +4,7 @@ import com.gym.app.Shaorma;
 import com.gym.app.data.observables.SaveCoursesObservable;
 import com.gym.app.data.observables.SaveProductsObservable;
 import com.gym.app.data.observables.UpdateCourseObservable;
+import com.gym.app.parts.authentication.AuthenticationActivity;
 import com.gym.app.parts.authentication.AuthenticationPresenter;
 import com.gym.app.parts.findcourses.FindCoursesPresenter;
 import com.gym.app.parts.findcourses.day_courses.DayCoursesPresenter;
@@ -35,4 +36,6 @@ public interface ApplicationComponent {
     void inject(UpdateCourseObservable updateCourseObservable);
 
     void inject(MyCoursesPresenter myCoursesPresenter);
+
+    void inject(AuthenticationActivity authenticationActivity);
 }

@@ -121,7 +121,7 @@ public class HomeActivity extends BaseActivity implements HomeNavigator {
 
     @Override
     public void logout() {
-        Prefs.Token.put(null);
+        Prefs.User.put(null);
         Intent intent = SplashActivity.createIntent(this);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

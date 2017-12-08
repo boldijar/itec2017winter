@@ -1,10 +1,13 @@
 package com.gym.app.parts.authentication;
 
-import com.gym.app.data.model.LoginResponse;
+import com.gym.app.data.model.User;
+import com.gym.app.data.model.UserResponse;
 import com.gym.app.di.InjectionHelper;
 import com.gym.app.presenter.Presenter;
-import com.gym.app.server.ApiService;
+import com.gym.app.server.ITecService;
 import com.gym.app.utils.MvpObserver;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -19,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 public class AuthenticationPresenter extends Presenter<AuthenticationView> {
 
     @Inject
-    ApiService mApiService;
+    ITecService mApiService;
 
     public AuthenticationPresenter(AuthenticationView view) {
         super(view);
@@ -27,17 +30,18 @@ public class AuthenticationPresenter extends Presenter<AuthenticationView> {
     }
 
     void login(String email, String password) {
-        mApiService.login(email, password)
+        mApiService.loginUsers("mail,eq," + email, "password,eq," + password)
                 .subscribeOn(Schedulers.io()) // where the request should be done
                 .observeOn(AndroidSchedulers.mainThread()) // where the response should be handled
-                .subscribe(new MvpObserver<LoginResponse>(this) { // this is a cool class to help disposing observables
+                .subscribe(new MvpObserver<UserResponse>(this) { // this is a cool class to help disposing observables
                     @Override
-                    public void onNext(LoginResponse value) {
-                        if (value.hasError()) {
-                            getView().showError(new IllegalStateException(value.mError));
+                    public void onNext(UserResponse response) {
+                        List<User> value = response.mUsers;
+                        if (value == null || value.isEmpty()) {
+                            getView().showError(new IllegalStateException("Invalid login"));
                             return;
                         }
-                        getView().showLoginResponse(value);
+                        getView().showLoginResponse(value.get(0));
                     }
 
                     @Override

@@ -14,9 +14,9 @@ import retrofit2.http.POST;
 public interface ApiService {
 
     @FormUrlEncoded
-    @POST("api/login")
+    @POST("api.php/login")
     Observable<LoginResponse> login(@Field("email") String email, @Field("password") String password);
 
-    @GET("api/products")
+    @GET("api.php/products")
     Observable<List<Product>> getProducts();
 }

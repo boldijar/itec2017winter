@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/logo_authentication_margin"
-            android:src="@drawable/logo_login"
+            android:src="@drawable/logo"
             tools:ignore="ContentDescription" />
 
         <TextView

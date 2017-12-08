@@ -120,7 +120,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void doneWaiting() {
-        if (Prefs.Token.get() != null) {
+        if (Prefs.User.get() != null) {
             startActivity(HomeActivity.createIntent(this));
         } else {
             startActivity(AuthenticationActivity.createIntent(this));

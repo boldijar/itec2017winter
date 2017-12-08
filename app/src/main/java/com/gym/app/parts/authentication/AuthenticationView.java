@@ -1,6 +1,6 @@
 package com.gym.app.parts.authentication;
 
-import com.gym.app.data.model.LoginResponse;
+import com.gym.app.data.model.User;
 
 /**
  * Contains only UI related methods for login
@@ -11,7 +11,7 @@ import com.gym.app.data.model.LoginResponse;
 
 interface AuthenticationView {
 
-    void showLoginResponse(LoginResponse loginResponse);
+    void showLoginResponse(User user);
 
     void showError(Throwable throwable);
 }

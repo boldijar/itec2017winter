@@ -1,8 +1,9 @@
 package com.gym.app.parts.authentication.register;
 
+import com.gym.app.data.model.User;
 import com.gym.app.di.InjectionHelper;
 import com.gym.app.presenter.Presenter;
-import com.gym.app.server.AuthenticationService;
+import com.gym.app.server.ITecService;
 
 import javax.inject.Inject;
 
@@ -20,7 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 public class RegisterPresenter extends Presenter<RegisterView> {
 
     @Inject
-    AuthenticationService mAuthenticationService;
+    ITecService mITecService;
 
     RegisterPresenter(RegisterView view) {
         super(view);
@@ -28,7 +29,11 @@ public class RegisterPresenter extends Presenter<RegisterView> {
     }
 
     void register(String username, String email, String password) {
-        addDisposable(mAuthenticationService.registerUser(email, password, username)
+        User user = new User();
+        user.mUsername = username;
+        user.mMail = email;
+        user.mPassword = password;
+        addDisposable(mITecService.addUser(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action() {
