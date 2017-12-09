@@ -2,16 +2,15 @@ package com.gym.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * TODO: Class description
- *
  * @author Paul
  * @since 2017.12.09
  */
 
-public class Event {
+public class Event implements Serializable{
     @SerializedName("id")
     public int mId;
     @SerializedName("time")
@@ -24,4 +23,8 @@ public class Event {
     public List<User> mParticipants;
     @SerializedName("lesson")
     public Lesson mLesson;
+    @SerializedName("teacher")
+    public String mTeacher;
+    @SerializedName("address")
+    public String mAddress;
 }

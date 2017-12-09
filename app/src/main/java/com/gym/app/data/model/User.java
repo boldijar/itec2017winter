@@ -2,12 +2,14 @@ package com.gym.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * @author Paul
  * @since 2017.12.08
  */
 
-public class User {
+public class User implements Serializable {
     @SerializedName("id")
     public int mId;
     @SerializedName("username")

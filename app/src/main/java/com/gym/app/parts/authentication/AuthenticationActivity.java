@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -171,6 +172,7 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
     @Override
     public void showLoginResponse(User user) {
         Prefs.User.putAsJson(user);
+        Prefs.ProfileCreated.put(!TextUtils.isEmpty(user.mSection));
         startActivity(HomeActivity.createIntent(this));
         finish();
     }

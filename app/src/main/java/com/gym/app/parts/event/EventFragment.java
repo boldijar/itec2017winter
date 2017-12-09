@@ -1,6 +1,8 @@
 package com.gym.app.parts.event;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -71,7 +73,7 @@ public class EventFragment extends BaseHomeFragment implements EventView {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         Glide.with(getContext()).load(mEvent.mLesson.mImage).into(mImageView);
-        mEventName.setText(mEvent.mName + " - " + mEvent.mLesson.mName);
+        mEventName.setText(mEvent.mName + " - " + mEvent.mLesson.mName + " with " + mEvent.mTeacher);
         mEventTime.setText(Constants.DAY_FORMAT.format(new Date(mEvent.mTime)));
 
         SectionAdapter sectionAdapter = new SectionAdapter(mEvent.mParticipants, Color.BLACK);
@@ -95,11 +97,23 @@ public class EventFragment extends BaseHomeFragment implements EventView {
         mEventPresenter.loadMessages(mEvent.mId);
     }
 
+    @OnClick(R.id.event_directions)
+    void getDirections() {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("google.navigation:q=" + mEvent.mAddress));
+        getContext().startActivity(intent);
+    }
+
     @Override
     public void showMessages(List<Message> messages) {
         mMessageAdapter.add(messages);
         mChatRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true));
         mChatRecycler.setAdapter(mMessageAdapter);
+    }
+
+    @OnClick(R.id.event_suggest)
+    void suggestChange() {
+        startActivity(SuggestionActivity.createIntent(getContext(), mEvent));
     }
 
     @Override

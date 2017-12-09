@@ -67,7 +67,8 @@
     <string name="section_dashboard">Section dashboard</string>
     <string name="chat_message">Your chat message here..</string>
     <string name="event_details">Event details</string>
-    <string name="attendees">Attendees:</string>Copy Code
+    <string name="attendees">Attendees:</string>
+    <string name="suggest_changes">Suggest changes</string>Copy Code
 
 
 </resources>

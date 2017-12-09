@@ -2,6 +2,8 @@ package com.gym.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * TODO: Class description
  *
@@ -9,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  * @since 2017.12.09
  */
 
-public class Lesson {
+public class Lesson implements Serializable {
     @SerializedName("name")
     public String mName;
     @SerializedName("image")
