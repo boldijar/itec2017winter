@@ -1,5 +1,7 @@
 package com.gym.app.parts.event;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -9,9 +11,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gym.app.R;
@@ -22,6 +27,7 @@ import com.gym.app.parts.section.MessageAdapter;
 import com.gym.app.parts.section.SectionAdapter;
 import com.gym.app.utils.Constants;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -74,7 +80,7 @@ public class EventFragment extends BaseHomeFragment implements EventView {
         ButterKnife.bind(this, view);
         Glide.with(getContext()).load(mEvent.mLesson.mImage).into(mImageView);
         mEventName.setText(mEvent.mName + " - " + mEvent.mLesson.mName + " with " + mEvent.mTeacher);
-        mEventTime.setText(Constants.DAY_FORMAT.format(new Date(mEvent.mTime)));
+        mEventTime.setText(Constants.DAY_FORMAT_TIME.format(new Date(mEvent.mTime)));
 
         SectionAdapter sectionAdapter = new SectionAdapter(mEvent.mParticipants, Color.BLACK);
         mAttendees.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -111,10 +117,41 @@ public class EventFragment extends BaseHomeFragment implements EventView {
         mChatRecycler.setAdapter(mMessageAdapter);
     }
 
+    Calendar mCalendar = Calendar.getInstance();
+
     @OnClick(R.id.event_suggest)
     void suggestChange() {
-        startActivity(SuggestionActivity.createIntent(getContext(), mEvent));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(mEvent.mTime);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), mDateListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
+
+    private TimePickerDialog.OnTimeSetListener mTimeListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+            mCalendar.set(Calendar.HOUR_OF_DAY, hour);
+            mCalendar.set(Calendar.MINUTE, minute);
+
+            Toast.makeText(getContext(), mCalendar.getTime().toString(), Toast.LENGTH_SHORT).show();
+        }
+    };
+    private DatePickerDialog.OnDateSetListener mDateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+            mCalendar.set(Calendar.YEAR, year);
+            mCalendar.set(Calendar.MONTH, month);
+            mCalendar.set(Calendar.DAY_OF_MONTH, day);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(mEvent.mTime);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), mTimeListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+            timePickerDialog.show();
+
+            Toast.makeText(getContext(), R.string.change_revieing, Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     public void addMessage(Message message) {

@@ -68,7 +68,10 @@
     <string name="chat_message">Your chat message here..</string>
     <string name="event_details">Event details</string>
     <string name="attendees">Attendees:</string>
-    <string name="suggest_changes">Suggest changes</string>Copy Code
+    <string name="suggest_changes">Suggest changes</string>
+    <string name="change_time">Change time</string>
+    <string name="change_revieing">Your change will be reviewed! Thank\'s for the feedback!</string>
+    Copy Code
 
 
 </resources>

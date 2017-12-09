@@ -91,7 +91,7 @@
                             android:drawableLeft="@drawable/edit"
                             android:drawablePadding="10dp"
                             android:padding="6dp"
-                            android:text="@string/suggest_changes"
+                            android:text="@string/change_time"
                             android:textAllCaps="true"
                             android:textColor="@color/colorPrimary"/>
                     </LinearLayout>
