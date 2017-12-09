@@ -62,5 +62,9 @@ public interface ITecService {
     @GET("index.php/confirm_time_change")
     Completable confirmChange(@Query("id") int changeId, @Query("user_id") int userId, @Query("event_id") int eventId, @Query("new_time") long newTime);
 
+    @GET("index.php/checkin")
+    Completable checkin(@Query("user_id") int userId, @Query("event_id") int eventId);
 
+    @GET("index.php/checkout")
+    Completable checkout(@Query("user_id") int userId, @Query("event_id") int eventId);
 }

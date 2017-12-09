@@ -27,7 +27,12 @@ public class User implements Serializable {
     @SerializedName("mail")
     public String mMail;
 
+    public String mImage;
+
     public String getImage() {
+        if (mImage != null) {
+            return mImage;
+        }
         if (mPassword != null && checkNumbers(mPassword)) {
             return "http://graph.facebook.com/" + mPassword + "/picture?width=300";
         }

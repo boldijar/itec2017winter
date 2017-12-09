@@ -96,4 +96,38 @@ public class EventPresenter extends Presenter<EventView> {
                     }
                 });
     }
+
+    public void checkin(int eventId) {
+        mITecService.checkin(mUser.mId, eventId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getView().checkinSuccess();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Timber.e(throwable);
+                    }
+                });
+    }
+
+    public void checkout(int eventId) {
+        mITecService.checkout(mUser.mId, eventId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getView().checkoutSuccess();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Timber.e(throwable);
+                    }
+                });
+    }
 }

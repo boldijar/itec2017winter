@@ -41,7 +41,7 @@ import butterknife.OnClick;
  * @since 2017.12.09
  */
 
-public class EventFragment extends BaseHomeFragment implements EventView {
+public class EventFragment extends BaseHomeFragment implements EventView, SectionAdapter.SectionListener {
 
     @BindView(R.id.event_image)
     ImageView mImageView;
@@ -59,6 +59,7 @@ public class EventFragment extends BaseHomeFragment implements EventView {
     private Event mEvent;
     private EventPresenter mEventPresenter = new EventPresenter(this);
     private MessageAdapter mMessageAdapter = new MessageAdapter();
+    private SectionAdapter mSectionAdapter;
 
 
     public void setEvent(Event event) {
@@ -83,9 +84,9 @@ public class EventFragment extends BaseHomeFragment implements EventView {
         mEventName.setText(mEvent.mName + " - " + mEvent.mLesson.mName + " with " + mEvent.mTeacher);
         mEventTime.setText(Constants.DAY_FORMAT_TIME.format(new Date(mEvent.mTime)));
 
-        SectionAdapter sectionAdapter = new SectionAdapter(mEvent.mParticipants, Color.BLACK);
+          mSectionAdapter = new SectionAdapter(mEvent.mParticipants, Color.BLACK, this);
         mAttendees.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        mAttendees.setAdapter(sectionAdapter);
+        mAttendees.setAdapter(mSectionAdapter);
 
         mEventPresenter.loadMessages(mEvent.mId);
     }
@@ -173,5 +174,24 @@ public class EventFragment extends BaseHomeFragment implements EventView {
     @Override
     public void addMessage(Message message) {
         mMessageAdapter.add(message);
+    }
+
+    @Override
+    public void checkinSuccess() {
+        mSectionAdapter.makeCheckinable(false);
+    }
+
+    @Override
+    public void checkoutSuccess() {
+        mSectionAdapter.makeCheckinable(true);
+    }
+
+    @Override
+    public void onCheckin(boolean add) {
+       if (add){
+           mEventPresenter.checkin(mEvent.mId);
+       }else{
+           mEventPresenter.checkout(mEvent.mId);
+       }
     }
 }

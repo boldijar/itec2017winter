@@ -16,4 +16,8 @@ public interface EventView {
     void showMessages(List<Message> messages);
 
     void addMessage(Message message);
+
+    void checkinSuccess();
+
+    void checkoutSuccess();
 }
