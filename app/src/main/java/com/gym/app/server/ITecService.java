@@ -1,6 +1,8 @@
 package com.gym.app.server;
 
+import com.gym.app.data.model.ChangeTimeRequest;
 import com.gym.app.data.model.Event;
+import com.gym.app.data.model.EventChangeRequestResponse;
 import com.gym.app.data.model.Message;
 import com.gym.app.data.model.MessageResponse;
 import com.gym.app.data.model.User;
@@ -36,7 +38,6 @@ public interface ITecService {
     @PUT("api.php/user/{id}")
     Completable updateUser(@Body User user, @Path("id") int id);
 
-    //http://192.168.1.122/itec/api.php/user?filter[]=username,eq,bolnizar&filter[]=password,eq,123123
     @GET("api.php/user")
     Observable<UserResponse> loginUsers(@Query("filter[]") String usernameFilter, @Query("filter[]") String passwordFilter);
 
@@ -51,4 +52,11 @@ public interface ITecService {
 
     @GET("api.php/message_event?include=user&order=time")
     Observable<MessageResponse> getEventMessages(@Query("filter") String filter);
+
+    @GET("api.php/event_change_time?include=event,lesson")
+    Call<EventChangeRequestResponse> getChangeRequests(@Query("filter") String filter);
+
+    @POST("api.php/event_change_time")
+    Completable addChangeTimeRequest(@Body ChangeTimeRequest body);
+
 }

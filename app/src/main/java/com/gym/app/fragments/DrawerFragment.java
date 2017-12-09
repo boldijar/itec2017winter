@@ -49,7 +49,7 @@ public class DrawerFragment extends BaseFragment {
             R.id.drawer_find_courses,
             R.id.drawer_section,
             R.id.drawer_profile,
-            R.id.drawer_shop,
+            R.id.drawer_confirmation,
             R.id.drawer_logout
     })
     void onOptionsClicked(View view) {
@@ -63,8 +63,8 @@ public class DrawerFragment extends BaseFragment {
             case R.id.drawer_profile:
                 mHomeNavigator.goToProfile();
                 return;
-            case R.id.drawer_shop:
-                mHomeNavigator.goToShop();
+            case R.id.drawer_confirmation:
+                mHomeNavigator.goToConfirmations();
                 return;
             case R.id.drawer_logout:
                 mHomeNavigator.logout();

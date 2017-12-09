@@ -134,7 +134,8 @@ public class EventFragment extends BaseHomeFragment implements EventView {
             mCalendar.set(Calendar.HOUR_OF_DAY, hour);
             mCalendar.set(Calendar.MINUTE, minute);
 
-            Toast.makeText(getContext(), mCalendar.getTime().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.change_revieing, Toast.LENGTH_SHORT).show();
+            mEventPresenter.doChangeRequest(mCalendar.getTimeInMillis(), mEvent);
         }
     };
     private DatePickerDialog.OnDateSetListener mDateListener = new DatePickerDialog.OnDateSetListener() {
@@ -149,7 +150,7 @@ public class EventFragment extends BaseHomeFragment implements EventView {
             TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), mTimeListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
             timePickerDialog.show();
 
-            Toast.makeText(getContext(), R.string.change_revieing, Toast.LENGTH_SHORT).show();
+
         }
     };
 

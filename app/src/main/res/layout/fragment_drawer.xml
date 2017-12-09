@@ -55,14 +55,14 @@
 
 
         <RadioButton
-            android:id="@+id/drawer_shop"
+            android:id="@+id/drawer_confirmation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:button="@null"
             android:paddingBottom="14dp"
             android:paddingLeft="40dp"
             android:paddingTop="14dp"
-            android:text="@string/shop"
+            android:text="@string/confirmation_changes"
             android:textColor="@color/selector_drawer_text"/>
 
 

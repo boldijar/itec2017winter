@@ -23,7 +23,9 @@
             fontPath="fonts/Lato-Light.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autoLink="web"
             android:textColor="@color/black"
+            android:textColorLink="@color/colorPrimary"
             tools:ignore="MissingPrefix"
             tools:text="Hi what are u doing"/>
 

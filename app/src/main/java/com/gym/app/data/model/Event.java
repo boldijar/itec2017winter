@@ -10,7 +10,7 @@ import java.util.List;
  * @since 2017.12.09
  */
 
-public class Event implements Serializable{
+public class Event implements Serializable {
     @SerializedName("id")
     public int mId;
     @SerializedName("time")
@@ -21,8 +21,10 @@ public class Event implements Serializable{
     public String mSection;
     @SerializedName("participants")
     public List<User> mParticipants;
-    @SerializedName("lesson")
+    @SerializedName("lesson_obj")
     public Lesson mLesson;
+    @SerializedName("lesson")
+    public Lesson[] mLessons;
     @SerializedName("teacher")
     public String mTeacher;
     @SerializedName("address")

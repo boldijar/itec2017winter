@@ -15,6 +15,7 @@ import android.view.View;
 import com.gym.app.R;
 import com.gym.app.data.Prefs;
 import com.gym.app.data.model.Event;
+import com.gym.app.parts.confirmation.ConfirmationFragment;
 import com.gym.app.parts.event.EventFragment;
 import com.gym.app.parts.findcourses.FindCoursesFragment;
 import com.gym.app.parts.home.BaseHomeFragment;
@@ -139,5 +140,10 @@ public class HomeActivity extends BaseActivity implements HomeNavigator {
         EventFragment eventFragment = new EventFragment();
         eventFragment.setEvent(event);
         setFragment(eventFragment);
+    }
+
+    @Override
+    public void goToConfirmations() {
+        setFragment(new ConfirmationFragment());
     }
 }

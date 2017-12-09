@@ -1,6 +1,8 @@
 package com.gym.app.parts.event;
 
 import com.gym.app.data.Prefs;
+import com.gym.app.data.model.ChangeTimeRequest;
+import com.gym.app.data.model.Event;
 import com.gym.app.data.model.Message;
 import com.gym.app.data.model.MessageResponse;
 import com.gym.app.data.model.User;
@@ -23,12 +25,15 @@ import timber.log.Timber;
  */
 
 public class EventPresenter extends Presenter<EventView> {
+    private final User mUser;
     @Inject
     ITecService mITecService;
 
     public EventPresenter(EventView view) {
         super(view);
         InjectionHelper.getApplicationComponent().inject(this);
+        mUser = Prefs.User.getFromJson(User.class);
+
     }
 
     public void loadMessages(int eventId) {
@@ -44,17 +49,39 @@ public class EventPresenter extends Presenter<EventView> {
     }
 
     public void sendMessage(String text, int eventId) {
-        User user = Prefs.User.getFromJson(User.class);
         Message message = new Message();
-        message.mUserId = user.mId;
+        message.mUserId = mUser.mId;
         message.mUser = new User[1];
-        message.mUser[0] = user;
+        message.mUser[0] = mUser;
         message.mText = text;
-        message.mSection = user.mSection;
+        message.mSection = mUser.mSection;
         message.mTime = System.currentTimeMillis();
         message.mEventId = eventId;
         getView().addMessage(message);
         mITecService.addEventMessage(message)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Timber.e(throwable);
+                    }
+                });
+    }
+
+    public void doChangeRequest(long timeInMillis, Event event) {
+        ChangeTimeRequest request = new ChangeTimeRequest();
+        request.mEventId = event.mId;
+        request.mNewTime = timeInMillis;
+        request.mOldTime = event.mTime;
+        request.mUserId = mUser.mId;
+
+        mITecService.addChangeTimeRequest(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action() {

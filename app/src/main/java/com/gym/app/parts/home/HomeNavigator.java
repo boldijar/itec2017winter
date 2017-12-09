@@ -20,4 +20,6 @@ public interface HomeNavigator {
     void logout();
 
     void goToEventDetails(Event event);
+
+    void goToConfirmations();
 }
