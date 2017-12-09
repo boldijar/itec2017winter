@@ -46,7 +46,7 @@ public class ConfirmationPresenter extends Presenter<ConfirmationView> {
     }
 
     public void confirmChange(final ChangeTimeRequest request) {
-        mITecService.confirmChange(request.mId, request.mUserId, request.mEventId)
+        mITecService.confirmChange(request.mId, request.mUserId, request.mEventId, request.mNewTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action() {

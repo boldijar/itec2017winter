@@ -60,7 +60,7 @@ public interface ITecService {
     Completable addChangeTimeRequest(@Body ChangeTimeRequest body);
 
     @GET("index.php/confirm_time_change")
-    Completable confirmChange(@Query("id") int changeId, @Query("user_id") int userId, @Query("event_id") int eventId);
+    Completable confirmChange(@Query("id") int changeId, @Query("user_id") int userId, @Query("event_id") int eventId, @Query("new_time") long newTime);
 
 
 }

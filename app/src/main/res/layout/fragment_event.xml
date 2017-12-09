@@ -94,6 +94,20 @@
                             android:text="@string/change_time"
                             android:textAllCaps="true"
                             android:textColor="@color/colorPrimary"/>
+
+                        <TextView
+                            android:id="@+id/event_calendar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginTop="4dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:drawableLeft="@drawable/ic_calendar"
+                            android:drawablePadding="10dp"
+                            android:padding="6dp"
+                            android:text="@string/add_to_calendar"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorPrimary"/>
                     </LinearLayout>
 
                     <ImageView

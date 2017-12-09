@@ -1,7 +1,6 @@
 package com.gym.app.activities;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;

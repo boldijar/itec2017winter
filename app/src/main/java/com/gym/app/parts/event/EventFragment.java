@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -108,6 +109,21 @@ public class EventFragment extends BaseHomeFragment implements EventView {
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                 Uri.parse("google.navigation:q=" + mEvent.mAddress));
         getContext().startActivity(intent);
+    }
+
+    @OnClick(R.id.event_calendar)
+    void calendarAdd() {
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra(CalendarContract.Events.TITLE, mEvent.mName + " - " + mEvent.mLesson.mName);
+        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
+                mEvent.mTime);
+        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
+                mEvent.mTime + 1000 * 60 * 60 * 2);
+        intent.putExtra(CalendarContract.Events.ALL_DAY, false);// periodicity
+        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, mEvent.mAddress);// periodicity
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, "Teacher: " + mEvent.mTeacher);
+        startActivity(intent);
     }
 
     @Override
