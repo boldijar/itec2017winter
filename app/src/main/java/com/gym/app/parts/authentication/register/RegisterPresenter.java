@@ -14,7 +14,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * @author catalinradoiu
+ *
  * @since 2017.11.15
  */
 

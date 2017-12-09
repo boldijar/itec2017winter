@@ -31,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Fragment for the courses from a certain day
  *
- * @author catalinradoiu
+ *
  * @since 2017.01.01
  */
 public class DayCoursesFragment extends BaseHomeFragment implements DayCoursesView, EventAdapter.EventListener {

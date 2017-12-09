@@ -5,7 +5,7 @@ import com.gym.app.data.model.Course;
 import java.util.List;
 
 /**
- * @author catalinradoiu
+ *
  * @since 2017.11.18
  */
 

@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @author catalinradoiu
+ *
  * @since 2017.10.25
  */
 

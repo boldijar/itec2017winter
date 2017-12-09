@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @author catalinradoiu
+ *
  * @since 2017.11.18
  */
 

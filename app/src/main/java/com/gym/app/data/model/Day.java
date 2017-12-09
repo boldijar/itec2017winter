@@ -1,7 +1,7 @@
 package com.gym.app.data.model;
 
 /**
- * @author catalinradoiu
+ *
  * @since 2017.11.05
  */
 

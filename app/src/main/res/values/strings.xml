@@ -69,12 +69,15 @@
     <string name="event_details">Event details</string>
     <string name="attendees">Attendees:</string>
     <string name="suggest_changes">Suggest changes</string>
-    <string name="change_time">Change time</string>
     <string name="change_revieing">Your change will be reviewed! Thank\'s for the feedback!</string>
     <string name="confirm_changes">Confirm changes</string>
     <string name="confirmation_changes">Confirm changes</string>
     <string name="no_confirmations">Nothing to confirm yet :( Please come later.</string>
     <string name="add_to_calendar">Add to calendar</string>
+    <string name="suggest_new_event">New event</string>
+    <string name="change_time">Change time</string>
+    <string name="teacher">Teacher</string>
+    <string name="address">Address</string>
     Copy Code
 
 

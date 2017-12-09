@@ -10,7 +10,7 @@ import com.gym.app.parts.authentication.register.RegisterFragment;
 /**
  * Pager adapter for navigating between the fragment from AuthenticationActivity
  *
- * @author catalinradoiu
+ *
  * @since 2017.10.25
  */
 class AuthenticationPagerAdapter extends FragmentPagerAdapter {

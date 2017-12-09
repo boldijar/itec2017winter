@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Observable for course update
  *
- * @author catalinradoiu
+ *
  * @since 2017.11.11
  */
 

@@ -11,6 +11,7 @@ import com.gym.app.R;
 import com.gym.app.data.model.Course;
 import com.gym.app.data.model.Day;
 import com.gym.app.data.model.Event;
+import com.gym.app.parts.event.SuggestionActivity;
 import com.gym.app.parts.home.BaseHomeFragment;
 import com.gym.app.view.EmptyLayout;
 
@@ -18,10 +19,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Paul
- * @author catalinradoiu
+ *
  * @since 2017.10.25
  */
 
@@ -112,5 +114,9 @@ public class FindCoursesFragment extends BaseHomeFragment implements FindCourses
                 mFindCoursesPresenter.initData();
             }
         });
+    }
+    @OnClick(R.id.fab)
+    void fabClick(){
+        startActivity(SuggestionActivity.createIntent(getContext()));
     }
 }

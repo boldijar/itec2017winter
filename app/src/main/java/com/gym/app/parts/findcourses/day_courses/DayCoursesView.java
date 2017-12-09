@@ -1,7 +1,7 @@
 package com.gym.app.parts.findcourses.day_courses;
 
 /**
- * @author catalinradoiu
+ *
  * @since 2017.11.05
  */
 interface DayCoursesView {

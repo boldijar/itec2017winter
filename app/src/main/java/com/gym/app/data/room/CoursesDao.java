@@ -15,7 +15,7 @@ import io.reactivex.Single;
 /**
  * Dao for database courses manipulation
  *
- * @author catalinradoiu
+ *
  * @since 2017.11.11
  */
 

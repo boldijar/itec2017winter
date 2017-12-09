@@ -27,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Presenter for the FindCoursesFragment
  *
- * @author catalinradoiu
+ *
  * @since 2017.10.31
  */
 public class FindCoursesPresenter extends Presenter<FindCoursesView> {

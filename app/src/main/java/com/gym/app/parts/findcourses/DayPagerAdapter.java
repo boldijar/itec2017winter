@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Pager adapter for the days of a week
  *
- * @author catalinradoiu
+ *
  * @since 02.01.2017
  */
 

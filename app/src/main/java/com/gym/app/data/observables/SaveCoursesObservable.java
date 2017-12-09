@@ -17,7 +17,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Observable for saving the courses in the database
  *
- * @author catalinradoiu
+ *
  * @since 2017.11.11
  */
 

@@ -12,8 +12,15 @@ import java.io.Serializable;
  */
 
 public class Lesson implements Serializable {
+    @SerializedName("id")
+    public int mId;
     @SerializedName("name")
     public String mName;
     @SerializedName("image")
     public String mImage;
+
+    @Override
+    public String toString() {
+        return mName;
+    }
 }

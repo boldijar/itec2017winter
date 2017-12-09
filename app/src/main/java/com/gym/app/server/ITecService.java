@@ -3,6 +3,8 @@ package com.gym.app.server;
 import com.gym.app.data.model.ChangeTimeRequest;
 import com.gym.app.data.model.Event;
 import com.gym.app.data.model.EventChangeRequestResponse;
+import com.gym.app.data.model.Lesson;
+import com.gym.app.data.model.LessonResponse;
 import com.gym.app.data.model.Message;
 import com.gym.app.data.model.MessageResponse;
 import com.gym.app.data.model.User;
@@ -67,4 +69,7 @@ public interface ITecService {
 
     @GET("index.php/checkout")
     Completable checkout(@Query("user_id") int userId, @Query("event_id") int eventId);
+
+    @GET("api.php/lesson")
+    Observable<LessonResponse> getLessons();
 }

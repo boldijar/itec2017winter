@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * Fragment will user own courses
  *
  * @author Paul
- * @author catalinradoiu
+ *
  * @since 2017.10.25
  */
 

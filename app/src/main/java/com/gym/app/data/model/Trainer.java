@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Trainer POJO class
  *
- * @author catalinradoiu
+ *
  * @since 2017.01.01
  */
 

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Contains UI related method for the FindCoursesFragment
  *
- * @author catalinradoiu
+ *
  * @since 2017.10.31
  */
 

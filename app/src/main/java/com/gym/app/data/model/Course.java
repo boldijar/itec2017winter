@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Course POJO
  *
- * @author catalinradoiu
+ *
  * @since 2017.01.01
  */
 

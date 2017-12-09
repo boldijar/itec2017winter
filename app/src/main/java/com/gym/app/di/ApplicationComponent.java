@@ -11,6 +11,7 @@ import com.gym.app.parts.authentication.register.RegisterPresenter;
 import com.gym.app.parts.confirmation.ConfirmationObservable;
 import com.gym.app.parts.confirmation.ConfirmationPresenter;
 import com.gym.app.parts.event.EventPresenter;
+import com.gym.app.parts.event.SuggestionPresenter;
 import com.gym.app.parts.findcourses.FindCoursesPresenter;
 import com.gym.app.parts.findcourses.day_courses.DayCoursesPresenter;
 import com.gym.app.parts.mycourses.MyCoursesPresenter;
@@ -62,4 +63,6 @@ public interface ApplicationComponent {
     void inject(ConfirmationObservable confirmationObservable);
 
     void inject(HomeActivity homeActivity);
+
+    void inject(SuggestionPresenter suggestionPresenter);
 }

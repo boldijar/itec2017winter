@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 /**
  * Service for api request for the courses
  *
- * @author catalinradoiu
+ *
  * @since 2017.01.01
  */
 

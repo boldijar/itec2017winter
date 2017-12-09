@@ -30,7 +30,7 @@ import static android.support.v7.widget.RecyclerView.NO_POSITION;
 /**
  * Adapter for the courses from a certain day
  *
- * @author catalinradoiu
+ *
  * @since 2017.01.01
  */
 
