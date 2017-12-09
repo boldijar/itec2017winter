@@ -59,4 +59,8 @@ public interface ITecService {
     @POST("api.php/event_change_time")
     Completable addChangeTimeRequest(@Body ChangeTimeRequest body);
 
+    @GET("index.php/confirm_time_change")
+    Completable confirmChange(@Query("id") int changeId, @Query("user_id") int userId, @Query("event_id") int eventId);
+
+
 }

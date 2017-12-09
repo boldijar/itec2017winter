@@ -29,4 +29,9 @@ public class ChangeTimeRequest extends ConfirmationModel {
     public ConfirmationType getType() {
         return ConfirmationType.TIME;
     }
+
+    @Override
+    public int getId() {
+        return mId;
+    }
 }

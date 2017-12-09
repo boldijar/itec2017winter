@@ -12,4 +12,6 @@ import java.util.List;
 public interface ConfirmationView {
 
     void showModels(List<ConfirmationModel> models);
+
+    void showChanged(int id);
 }

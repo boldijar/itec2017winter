@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.gym.app.R;
 import com.gym.app.data.model.ChangeTimeRequest;
@@ -26,6 +25,8 @@ public class ConfirmationFragment extends BaseHomeFragment implements Confirmati
 
     @BindView(R.id.confirmation_recycler)
     RecyclerView mRecyclerView;
+    @BindView(R.id.confirmation_empty)
+    View mEmpty;
     private ConfirmationPresenter mConfirmationPresenter = new ConfirmationPresenter(this);
     private ConfirmationAdapter mConfirmationAdapter;
 
@@ -51,10 +52,17 @@ public class ConfirmationFragment extends BaseHomeFragment implements Confirmati
         mConfirmationAdapter = new ConfirmationAdapter(models, this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mConfirmationAdapter);
+        mEmpty.setVisibility(mConfirmationAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showChanged(int id) {
+        mConfirmationAdapter.remove(id);
+        mEmpty.setVisibility(mConfirmationAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void confirmChange(ChangeTimeRequest request) {
-        Toast.makeText(getContext(), "CHANGEEE", Toast.LENGTH_SHORT).show();
+        mConfirmationPresenter.confirmChange(request);
     }
 }

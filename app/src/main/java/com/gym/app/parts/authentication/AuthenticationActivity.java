@@ -14,6 +14,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.gym.app.R;
 import com.gym.app.activities.BaseActivity;
 import com.gym.app.activities.HomeActivity;
@@ -173,6 +174,8 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
     public void showLoginResponse(User user) {
         Prefs.User.putAsJson(user);
         Prefs.ProfileCreated.put(!TextUtils.isEmpty(user.mSection));
+        Timber.e("Subscribed to topic: " + user.mId);
+        FirebaseMessaging.getInstance().subscribeToTopic(user.mId + "");
         startActivity(HomeActivity.createIntent(this));
         finish();
     }

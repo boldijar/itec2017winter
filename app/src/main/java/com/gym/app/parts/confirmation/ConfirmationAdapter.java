@@ -76,6 +76,17 @@ public class ConfirmationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mList.size();
     }
 
+    public void remove(int id) {
+        for (int i = 0; i < mList.size(); i++) {
+            ConfirmationModel model = mList.get(i);
+            if (model.getId() == id) {
+                mList.remove(i);
+                notifyItemRemoved(i);
+                return;
+            }
+        }
+    }
+
     public static class TimeChangeHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.time_confirmation_confirm)

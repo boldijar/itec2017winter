@@ -1,6 +1,7 @@
 package com.gym.app.di;
 
 import com.gym.app.Shaorma;
+import com.gym.app.activities.HomeActivity;
 import com.gym.app.data.observables.SaveCoursesObservable;
 import com.gym.app.data.observables.SaveProductsObservable;
 import com.gym.app.data.observables.UpdateCourseObservable;
@@ -59,4 +60,6 @@ public interface ApplicationComponent {
     void inject(ConfirmationPresenter confirmationPresenter);
 
     void inject(ConfirmationObservable confirmationObservable);
+
+    void inject(HomeActivity homeActivity);
 }

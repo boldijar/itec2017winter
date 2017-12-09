@@ -9,4 +9,6 @@ package com.gym.app.parts.confirmation;
 
 public abstract class ConfirmationModel {
     public abstract ConfirmationType getType();
+
+    public abstract int getId();
 }

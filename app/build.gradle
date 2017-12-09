@@ -69,4 +69,9 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
     implementation 'com.facebook.android:facebook-login:[4,5)'
+    compile 'com.google.firebase:firebase-messaging:11.6.2'
+    compile 'com.google.firebase:firebase-core:11.6.2'
+
 }
+
+apply plugin: 'com.google.gms.google-services'

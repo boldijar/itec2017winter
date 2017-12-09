@@ -12,9 +12,12 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.gym.app.R;
 import com.gym.app.data.Prefs;
 import com.gym.app.data.model.Event;
+import com.gym.app.data.model.User;
+import com.gym.app.di.InjectionHelper;
 import com.gym.app.parts.confirmation.ConfirmationFragment;
 import com.gym.app.parts.event.EventFragment;
 import com.gym.app.parts.findcourses.FindCoursesFragment;
@@ -23,9 +26,19 @@ import com.gym.app.parts.home.HomeNavigator;
 import com.gym.app.parts.profile.ProfileFragment;
 import com.gym.app.parts.section.SectionFragment;
 import com.gym.app.parts.shop.ShopFragment;
+import com.gym.app.server.ITecService;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * @author Paul
@@ -34,11 +47,16 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements HomeNavigator {
 
+    private static final String ARG_EVENT = "argevent";
+
     @BindView(R.id.home_drawer_layout)
     DrawerLayout mDrawerLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    @Inject
+    ITecService mITecService;
 
     public static Intent createIntent(Context context) {
         return new Intent(context, HomeActivity.class);
@@ -48,6 +66,7 @@ public class HomeActivity extends BaseActivity implements HomeNavigator {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        InjectionHelper.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
         initDrawer();
         if (!Prefs.ProfileCreated.getBoolean(false)) {
@@ -55,6 +74,50 @@ public class HomeActivity extends BaseActivity implements HomeNavigator {
         } else {
             goToSectionDashboard();
         }
+        onNewIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        final int eventId = intent.getIntExtra(ARG_EVENT, -1);
+        if (eventId == -1) {
+            return;
+        }
+
+        User user = Prefs.User.getFromJson(User.class);
+        mITecService.getEvents(user.mSection)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Event>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Event> value) {
+                        for (Event event : value) {
+                            if (event.mId == eventId) {
+                                goToEventDetails(event);
+                                return;
+                            }
+                        }
+                        Timber.e("Not found any event with id " + eventId);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.e(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+
+                });
     }
 
     private void initDrawer() {
@@ -128,6 +191,8 @@ public class HomeActivity extends BaseActivity implements HomeNavigator {
 
     @Override
     public void logout() {
+        User user = Prefs.User.getFromJson(User.class);
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(user.mId + "");
         Prefs.User.put(null);
         Intent intent = SplashActivity.createIntent(this);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -145,5 +210,11 @@ public class HomeActivity extends BaseActivity implements HomeNavigator {
     @Override
     public void goToConfirmations() {
         setFragment(new ConfirmationFragment());
+    }
+
+    public static Intent createIntent(Context context, int eventId) {
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.putExtra(ARG_EVENT, eventId);
+        return intent;
     }
 }
