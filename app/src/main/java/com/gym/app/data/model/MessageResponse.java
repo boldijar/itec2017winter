@@ -12,6 +12,6 @@ import java.util.List;
  */
 
 public class MessageResponse {
-    @SerializedName("message")
+    @SerializedName(value = "message", alternate = "message_event")
     public List<Message> mMessage;
 }

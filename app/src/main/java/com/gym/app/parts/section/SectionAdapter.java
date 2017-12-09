@@ -1,5 +1,6 @@
 package com.gym.app.parts.section;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +25,15 @@ import butterknife.ButterKnife;
 public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.SectionHolder> {
 
     private final List<User> mUsers;
+    private int mTextColor = Color.WHITE;
 
     public SectionAdapter(List<User> users) {
         mUsers = users;
+    }
+
+    public SectionAdapter(List<User> users, int textColor) {
+        mUsers = users;
+        mTextColor = textColor;
     }
 
     @Override
@@ -39,6 +46,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.SectionH
         User user = mUsers.get(position);
         Glide.with(holder.mImage.getContext()).load(user.getImage()).into(holder.mImage);
         holder.mText.setText(user.mUsername);
+        holder.mText.setTextColor(mTextColor);
     }
 
     @Override

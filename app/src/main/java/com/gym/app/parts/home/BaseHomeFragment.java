@@ -32,6 +32,9 @@ public abstract class BaseHomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (getTitle() == 0) {
+            return;
+        }
         getActivity().setTitle(getTitle());
     }
 }

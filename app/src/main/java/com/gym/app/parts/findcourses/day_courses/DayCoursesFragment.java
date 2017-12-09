@@ -13,9 +13,9 @@ import android.widget.Toast;
 import com.gym.app.R;
 import com.gym.app.data.model.Day;
 import com.gym.app.data.model.Event;
-import com.gym.app.fragments.BaseFragment;
 import com.gym.app.parts.findcourses.EventAdapter;
 import com.gym.app.parts.findcourses.FindCoursesView;
+import com.gym.app.parts.home.BaseHomeFragment;
 import com.gym.app.utils.MvpObserver;
 import com.gym.app.view.EmptyLayout;
 
@@ -34,7 +34,7 @@ import io.reactivex.schedulers.Schedulers;
  * @author catalinradoiu
  * @since 2017.01.01
  */
-public class DayCoursesFragment extends BaseFragment implements DayCoursesView {
+public class DayCoursesFragment extends BaseHomeFragment implements DayCoursesView, EventAdapter.EventListener {
 
     private static final String DAY_START = "dayStart";
     private static final String DAY_END = "dayEnd";
@@ -114,7 +114,7 @@ public class DayCoursesFragment extends BaseFragment implements DayCoursesView {
         if (!courseList.isEmpty()) {
             mTodayCoursesRecycler.setVisibility(View.VISIBLE);
             mEmptyLayout.setVisibility(View.GONE);
-            mTodayCoursesAdapter = new EventAdapter(courseList, eventListener);
+            mTodayCoursesAdapter = new EventAdapter(courseList, this);
             mLinearLayoutManager = new LinearLayoutManager(getContext());
             DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(),
                     mLinearLayoutManager.getOrientation());
@@ -142,5 +142,15 @@ public class DayCoursesFragment extends BaseFragment implements DayCoursesView {
                                 .setClickable(true);
                     }
                 });
+    }
+
+    @Override
+    public void onEventClick(Event event) {
+        mHomeNavigator.goToEventDetails(event);
+    }
+
+    @Override
+    protected int getTitle() {
+        return 0;
     }
 }

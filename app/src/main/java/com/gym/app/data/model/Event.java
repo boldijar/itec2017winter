@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Event {
     @SerializedName("id")
-    public String mId;
+    public int mId;
     @SerializedName("time")
     public long mTime;
     @SerializedName("name")

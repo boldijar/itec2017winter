@@ -30,6 +30,9 @@ public interface ITecService {
     @POST("api.php/message")
     Completable addMessage(@Body Message message);
 
+    @POST("api.php/message_event")
+    Completable addEventMessage(@Body Message message);
+
     @PUT("api.php/user/{id}")
     Completable updateUser(@Body User user, @Path("id") int id);
 
@@ -46,4 +49,6 @@ public interface ITecService {
     @GET("api.php/message?include=user&order=time")
     Call<MessageResponse> getMessages(@Query("filter") String filter);
 
+    @GET("api.php/message_event?include=user&order=time")
+    Observable<MessageResponse> getEventMessages(@Query("filter") String filter);
 }

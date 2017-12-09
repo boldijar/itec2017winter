@@ -17,6 +17,8 @@ public class Message {
     public int mUserId;
     @SerializedName("user")
     public User[] mUser;
+    @SerializedName("event_id")
+    public int mEventId;
 
     public String getImage() {
         if (mUser == null || mUser.length == 0) {
