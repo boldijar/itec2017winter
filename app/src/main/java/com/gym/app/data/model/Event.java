@@ -1,6 +1,8 @@
 package com.gym.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.gym.app.parts.confirmation.ConfirmationModel;
+import com.gym.app.parts.confirmation.ConfirmationType;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
  * @since 2017.12.09
  */
 
-public class Event implements Serializable {
+public class Event extends ConfirmationModel implements Serializable {
     @SerializedName("id")
     public int mId;
     @SerializedName("time")
@@ -29,4 +31,19 @@ public class Event implements Serializable {
     public String mTeacher;
     @SerializedName("address")
     public String mAddress;
+
+    @SerializedName("user_id")
+    public int mUserId;
+    @SerializedName("lesson_id")
+    public int mLessonId;
+
+    @Override
+    public ConfirmationType getType() {
+        return ConfirmationType.EVENT;
+    }
+
+    @Override
+    public int getId() {
+        return mId;
+    }
 }

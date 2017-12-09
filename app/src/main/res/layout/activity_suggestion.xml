@@ -21,10 +21,10 @@
         android:layout_gravity="center"/>
 
     <TextView
-        android:layout_marginTop="10dp"
         android:id="@+id/suggestion_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Time: N/A"/>
 
     <TextView
@@ -37,6 +37,26 @@
         android:text="@string/change_time"
         android:textAllCaps="true"
         android:textColor="@color/colorPrimary"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/suggestion_name"
+            fontPath="fonts/Lato-Light.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:hint="@string/name"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_gray"
+            android:textSize="@dimen/authentication_input_size"
+            app:backgroundTint="@color/colorPrimary"
+            />
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="300dp"

@@ -13,5 +13,5 @@ public interface ConfirmationView {
 
     void showModels(List<ConfirmationModel> models);
 
-    void showChanged(int id);
+    void showChanged(ConfirmationType type, int id);
 }

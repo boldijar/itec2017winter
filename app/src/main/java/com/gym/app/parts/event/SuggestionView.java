@@ -12,4 +12,6 @@ import java.util.List;
 public interface SuggestionView {
 
     void showLessons(List<Lesson> lessonList);
+
+    void done();
 }

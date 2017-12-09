@@ -14,30 +14,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/time_confirmation_title"
+            android:id="@+id/event_request_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             tools:text="Laboratory - Assembly"/>
 
         <TextView
-            android:id="@+id/time_confirmation_teacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha=".6"
-            android:textColor="@color/black"
-            tools:text="Teacher: John Doe"/>
-
-        <TextView
-            android:id="@+id/time_confirmation_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha=".8"
-            android:textColor="@color/black"
-            tools:text="Requested to change time from 10.10.2321 12:23 to 10.10.2332 12:22"/>
-
-        <TextView
-            android:id="@+id/time_confirmation_confirm"
+            android:id="@+id/event_request_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

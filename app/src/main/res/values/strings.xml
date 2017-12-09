@@ -78,6 +78,11 @@
     <string name="change_time">Change time</string>
     <string name="teacher">Teacher</string>
     <string name="address">Address</string>
+    <string name="please_set_time">Please set the time!</string>
+    <string name="please_fill_fields">Please fill in all fields!</string>
+    <string name="name">Event name</string>
+    <string name="select_a_lesson">Please choose a lesson</string>
+    <string name="wait_event_approval">Event request sent. Please wait for someone to approve it.</string>
     Copy Code
 
 

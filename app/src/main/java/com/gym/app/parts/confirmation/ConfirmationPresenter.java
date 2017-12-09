@@ -1,6 +1,7 @@
 package com.gym.app.parts.confirmation;
 
 import com.gym.app.data.model.ChangeTimeRequest;
+import com.gym.app.data.model.Event;
 import com.gym.app.di.InjectionHelper;
 import com.gym.app.presenter.Presenter;
 import com.gym.app.server.ITecService;
@@ -52,7 +53,24 @@ public class ConfirmationPresenter extends Presenter<ConfirmationView> {
                 .subscribe(new Action() {
                     @Override
                     public void run() throws Exception {
-                        getView().showChanged(request.mId);
+                        getView().showChanged(request.getType(), request.mId);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Timber.e(throwable);
+                    }
+                });
+    }
+
+    public void confirmEventChange(final Event model) {
+        mITecService.confirmEvent(model.mId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        getView().showChanged(model.getType(), model.mId);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.gym.app.R;
 import com.gym.app.data.model.ChangeTimeRequest;
+import com.gym.app.data.model.Event;
 import com.gym.app.parts.home.BaseHomeFragment;
 
 import java.util.List;
@@ -56,13 +57,18 @@ public class ConfirmationFragment extends BaseHomeFragment implements Confirmati
     }
 
     @Override
-    public void showChanged(int id) {
-        mConfirmationAdapter.remove(id);
+    public void showChanged(ConfirmationType type, int id) {
+        mConfirmationAdapter.remove(type, id);
         mEmpty.setVisibility(mConfirmationAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void confirmChange(ChangeTimeRequest request) {
         mConfirmationPresenter.confirmChange(request);
+    }
+
+    @Override
+    public void confirmChange(Event model) {
+        mConfirmationPresenter.confirmEventChange(model);
     }
 }

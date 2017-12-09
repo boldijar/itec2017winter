@@ -2,8 +2,8 @@ package com.gym.app.server;
 
 import com.gym.app.data.model.ChangeTimeRequest;
 import com.gym.app.data.model.Event;
+import com.gym.app.data.model.EventAddRequestResponse;
 import com.gym.app.data.model.EventChangeRequestResponse;
-import com.gym.app.data.model.Lesson;
 import com.gym.app.data.model.LessonResponse;
 import com.gym.app.data.model.Message;
 import com.gym.app.data.model.MessageResponse;
@@ -30,6 +30,9 @@ public interface ITecService {
 
     @POST("api.php/user")
     Completable addUser(@Body User user);
+
+    @POST("api.php/event_request")
+    Completable addEventRequest(@Body Event event);
 
     @POST("api.php/message")
     Completable addMessage(@Body Message message);
@@ -58,6 +61,9 @@ public interface ITecService {
     @GET("api.php/event_change_time?include=event,lesson")
     Call<EventChangeRequestResponse> getChangeRequests(@Query("filter") String filter);
 
+    @GET("api.php/event_request?include=lesson")
+    Call<EventAddRequestResponse> getEventRequest(@Query("filter") String filter);
+
     @POST("api.php/event_change_time")
     Completable addChangeTimeRequest(@Body ChangeTimeRequest body);
 
@@ -72,4 +78,7 @@ public interface ITecService {
 
     @GET("api.php/lesson")
     Observable<LessonResponse> getLessons();
+
+    @GET("index.php/confirm_event")
+    Completable confirmEvent(@Query("id") int eventRequestId);
 }

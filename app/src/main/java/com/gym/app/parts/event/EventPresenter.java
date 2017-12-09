@@ -76,6 +76,7 @@ public class EventPresenter extends Presenter<EventView> {
 
     public void doChangeRequest(long timeInMillis, Event event) {
         ChangeTimeRequest request = new ChangeTimeRequest();
+        request.mId = 0;
         request.mEventId = event.mId;
         request.mNewTime = timeInMillis;
         request.mOldTime = event.mTime;
