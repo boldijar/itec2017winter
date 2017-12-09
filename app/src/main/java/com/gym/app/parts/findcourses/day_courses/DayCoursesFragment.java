@@ -11,9 +11,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.gym.app.R;
-import com.gym.app.data.model.Course;
 import com.gym.app.data.model.Day;
+import com.gym.app.data.model.Event;
 import com.gym.app.fragments.BaseFragment;
+import com.gym.app.parts.findcourses.EventAdapter;
 import com.gym.app.parts.findcourses.FindCoursesView;
 import com.gym.app.utils.MvpObserver;
 import com.gym.app.view.EmptyLayout;
@@ -45,7 +46,7 @@ public class DayCoursesFragment extends BaseFragment implements DayCoursesView {
     EmptyLayout mEmptyLayout;
 
     private DayCoursesPresenter mDayCoursesPresenter;
-    private DayCoursesAdapter mTodayCoursesAdapter = new DayCoursesAdapter();
+    private EventAdapter mTodayCoursesAdapter;
     private Snackbar mRetrySnackBar;
     private Toast mOperationStatus;
     private LinearLayoutManager mLinearLayoutManager;
@@ -64,7 +65,6 @@ public class DayCoursesFragment extends BaseFragment implements DayCoursesView {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         initPresenter();
-        setListeners();
         initRecycler();
     }
 
@@ -99,73 +99,22 @@ public class DayCoursesFragment extends BaseFragment implements DayCoursesView {
 
     @Override
     public void displayOperationSuccessful(final OperationType operationType, int coursePosition) {
-        String toastMessage = "";
-        switch (operationType) {
-            case REGISTER_TO_COURSE:
-                toastMessage = getString(R.string.registration_successful);
-                break;
-            case REMOVE_COURSE:
-                toastMessage = getString(R.string.unregister_successful);
-                break;
-        }
-        if (mOperationStatus != null) {
-            mOperationStatus.cancel();
-        }
-        mOperationStatus = Toast.makeText(getContext(), toastMessage, Toast.LENGTH_SHORT);
-        mOperationStatus.show();
-        mTodayCoursesAdapter.updateCourse(coursePosition);
-        enableCourseButton(coursePosition);
+
     }
 
     @Override
     public void displayError(final OperationType operationType, final int coursePosition) {
-        if (getView() != null) {
-            mRetrySnackBar = Snackbar.make(getView(),
-                    getString(R.string.network_error), Snackbar.LENGTH_LONG);
-            mRetrySnackBar.setAction(getString(R.string.retry), new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mLinearLayoutManager.findViewByPosition(coursePosition)
-                            .findViewById(R.id.handle_course_button)
-                            .setClickable(false);
-                    switch (operationType) {
-                        case REGISTER_TO_COURSE:
-                            mDayCoursesPresenter.handleCourseClick(mTodayCoursesAdapter
-                                    .getCourse(coursePosition), coursePosition, false);
-                            break;
-                        case REMOVE_COURSE:
-                            mDayCoursesPresenter.handleCourseClick(mTodayCoursesAdapter
-                                    .getCourse(coursePosition), coursePosition, true);
-                            break;
-                    }
-                }
-            });
-            mRetrySnackBar.show();
-        }
-        enableCourseButton(coursePosition);
-    }
 
-    private void setListeners() {
-        mTodayCoursesAdapter.setDayCourseClickListener(new DayCoursesAdapter.DayCourseClickListener() {
-            @Override
-            public void onClick(int position) {
-                mLinearLayoutManager.findViewByPosition(position)
-                        .findViewById(R.id.handle_course_button)
-                        .setClickable(false);
-                Course course = mTodayCoursesAdapter.getCourse(position);
-                mDayCoursesPresenter.handleCourseClick(course, position, course.isRegistered());
-            }
-        });
     }
 
     private void initRecycler() {
-        List<Course> courseList = ((FindCoursesView) getParentFragment()).getCoursesForDay(
+        List<Event> courseList = ((FindCoursesView) getParentFragment()).getCoursesForDay(
                 getArguments().getLong(DAY_START),
                 getArguments().getLong(DAY_END));
         if (!courseList.isEmpty()) {
             mTodayCoursesRecycler.setVisibility(View.VISIBLE);
             mEmptyLayout.setVisibility(View.GONE);
-            mTodayCoursesAdapter.setCourses(courseList);
+            mTodayCoursesAdapter = new EventAdapter(courseList, eventListener);
             mLinearLayoutManager = new LinearLayoutManager(getContext());
             DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(),
                     mLinearLayoutManager.getOrientation());

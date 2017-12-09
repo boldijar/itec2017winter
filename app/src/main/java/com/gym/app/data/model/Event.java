@@ -15,11 +15,13 @@ public class Event {
     @SerializedName("id")
     public String mId;
     @SerializedName("time")
-    public String mTime;
+    public long mTime;
     @SerializedName("name")
     public String mName;
     @SerializedName("section")
     public String mSection;
     @SerializedName("participants")
     public List<User> mParticipants;
+    @SerializedName("lesson")
+    public Lesson mLesson;
 }

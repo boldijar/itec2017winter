@@ -2,14 +2,15 @@ package com.gym.app.parts.findcourses;
 
 import android.annotation.SuppressLint;
 
+import com.gym.app.data.Prefs;
 import com.gym.app.data.SystemUtils;
-import com.gym.app.data.model.Course;
 import com.gym.app.data.model.Day;
-import com.gym.app.data.observables.SaveCoursesObservable;
+import com.gym.app.data.model.Event;
+import com.gym.app.data.model.User;
 import com.gym.app.data.room.AppDatabase;
 import com.gym.app.di.InjectionHelper;
 import com.gym.app.presenter.Presenter;
-import com.gym.app.server.CoursesService;
+import com.gym.app.server.ITecService;
 import com.gym.app.utils.MvpObserver;
 
 import java.text.SimpleDateFormat;
@@ -21,9 +22,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -34,13 +32,13 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class FindCoursesPresenter extends Presenter<FindCoursesView> {
 
-    private static final String DAY_NAME_FORMAT = "EEEE";
+    private static final String DAY_NAME_FORMAT = "EEEE, d.MM.yyyy";
     private static final long FIVE_DAYS_TIMESTAMP = 5 * 24 * 3600 * 1000;
     private static final long ONE_DAY_TIMESTAMP = 24 * 3600 * 1000;
-    private static final int DAYS_NUMBER = 5;
+    private static final int DAYS_NUMBER = 30;
 
     @Inject
-    CoursesService mCoursesService;
+    ITecService mService;
 
     @Inject
     SystemUtils mSystemUtils;
@@ -48,7 +46,7 @@ public class FindCoursesPresenter extends Presenter<FindCoursesView> {
     @Inject
     AppDatabase mAppDatabase;
 
-    private List<Course> mCoursesList;
+    private List<Event> mEvents;
     private List<Day> mDaysList;
     private String mToday;
     private String mTomorrow;
@@ -56,26 +54,28 @@ public class FindCoursesPresenter extends Presenter<FindCoursesView> {
     FindCoursesPresenter(FindCoursesView view) {
         super(view);
         InjectionHelper.getApplicationComponent().inject(this);
-        mCoursesList = new ArrayList<>();
+        mEvents = new ArrayList<>();
         mDaysList = new ArrayList<>();
     }
 
+    int todayIndex = 0;
+
     void initData() {
         //Initialize the days
-        long currentTime = System.currentTimeMillis() / 1000;
         mDaysList = generateDaysList();
-        getView().initDays(mDaysList);
+        getView().initDays(mDaysList, todayIndex);
 
         //Initialize the courses
-        long endPeriod = currentTime + FIVE_DAYS_TIMESTAMP;
-        loadCourses(currentTime, endPeriod);
+        loadCourses();
     }
 
-    List<Course> getCoursesForDay(long dayStartTime, long dayEndTime) {
-        List<Course> result = new ArrayList<>();
-        for (Course course : mCoursesList) {
-            if (course.getCourseDate() >= dayStartTime && course.getCourseDate() <= dayEndTime) {
-                result.add(course);
+    List<Event> getCoursesForDay(long dayStartTime, long dayEndTime) {
+        dayStartTime *= 1000;
+        dayEndTime *= 1000;
+        List<Event> result = new ArrayList<>();
+        for (Event event : mEvents) {
+            if (event.mTime >= dayStartTime && event.mTime <= dayEndTime) {
+                result.add(event);
             }
         }
         return result;
@@ -93,67 +93,35 @@ public class FindCoursesPresenter extends Presenter<FindCoursesView> {
         this.mTomorrow = tomorrow;
     }
 
-    private void loadCourses(long periodStart, long periodEnd) {
-        if (mSystemUtils.isNetworkUnavailable()) {
-            loadCoursesOffline();
-        } else {
-            mCoursesService.getCoursesForPeriod(periodStart, periodEnd)
-                    .zipWith(mCoursesService.getCoursesForCurrentUser(true),
-                            new BiFunction<List<Course>, List<Course>, List<Course>>() {
-
-                                @Override
-                                public List<Course> apply(@NonNull List<Course> firstList,
-                                                          @NonNull List<Course> secondList) throws Exception {
-                                    for (Course value : firstList) {
-                                        if (secondList.contains(value)) {
-                                            value.setIsRegistered(true);
-                                        }
-                                    }
-                                    return firstList;
-                                }
-                            })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new MvpObserver<List<Course>>(this) {
-                        @Override
-                        public void onNext(List<Course> value) {
-                            SaveCoursesObservable.newInstance(value).subscribe();
-                            getView().setLoaded();
-                            mCoursesList.addAll(value);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            super.onError(e);
-                            getView().setError();
-                        }
-                    });
-        }
-    }
-
-    private void loadCoursesOffline() {
-        mAppDatabase.getCoursesDao().getAllCourses()
+    private void loadCourses() {
+        User user = Prefs.User.getFromJson(User.class);
+        mService.getEvents(user.mSection)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Course>>() {
+                .subscribe(new MvpObserver<List<Event>>(this) {
                     @Override
-                    public void accept(@NonNull List<Course> courseList) throws Exception {
+                    public void onNext(List<Event> value) {
                         getView().setLoaded();
-                        mCoursesList.addAll(courseList);
+                        mEvents.addAll(value);
                     }
-                }, new Consumer<Throwable>() {
+
                     @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
+                    public void onError(Throwable e) {
+                        super.onError(e);
                         getView().setError();
                     }
                 });
     }
+
+
+    final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
 
     private List<Day> generateDaysList() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat =
                 new SimpleDateFormat(DAY_NAME_FORMAT);
         List<Day> days = new ArrayList<>();
         Calendar currentCalendar = Calendar.getInstance();
+        currentCalendar.add(Calendar.DATE, -5);
         long currentDayStartTime = currentCalendar.getTimeInMillis();
         String currentDayName = dateFormat.format(currentCalendar.getTime());
         currentCalendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -163,13 +131,18 @@ public class FindCoursesPresenter extends Presenter<FindCoursesView> {
         long currentDayEndTime = currentCalendar.getTimeInMillis() + ONE_DAY_TIMESTAMP - 1;
         for (int i = 0; i < DAYS_NUMBER; i++) {
             //For the day, the milliseconds are converted to seconds
+
+            String currentStartTimeString = fmt.format(new Date(currentDayStartTime));
+            String nowTimeString = fmt.format(new Date());
+            if (nowTimeString.equals(currentStartTimeString)) {
+                todayIndex = i;
+            }
             days.add(new Day(currentDayName, currentDayStartTime / 1000, currentDayEndTime / 1000));
             currentDayStartTime = currentDayEndTime + 1;
             currentDayEndTime += ONE_DAY_TIMESTAMP;
             currentDayName = dateFormat.format(new Date(currentDayStartTime));
+
         }
-        days.get(0).setDayName(mToday);
-        days.get(1).setDayName(mTomorrow);
         return days;
     }
 }

@@ -38,7 +38,7 @@ public interface ITecService {
     Observable<UserResponse> loginUsers(@Query("filter[]") String usernameFilter, @Query("filter[]") String passwordFilter);
 
     @GET("index.php/events")
-    Observable<List<Event>> getEvents(@Query("from") long from, @Query("to") long to, @Query("section") String section);
+    Observable<List<Event>> getEvents(@Query("section") String section);
 
     @GET("api.php/user?order=group_name")
     Call<UserResponse> getUsers(@Query("filter") String filter);

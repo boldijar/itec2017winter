@@ -10,6 +10,7 @@ import android.view.View;
 import com.gym.app.R;
 import com.gym.app.data.model.Course;
 import com.gym.app.data.model.Day;
+import com.gym.app.data.model.Event;
 import com.gym.app.parts.home.BaseHomeFragment;
 import com.gym.app.view.EmptyLayout;
 
@@ -67,8 +68,9 @@ public class FindCoursesFragment extends BaseHomeFragment implements FindCourses
 
 
     @Override
-    public void initDays(List<Day> days) {
+    public void initDays(List<Day> days,int todayIndex) {
         mDayPagerAdapter.setDaysList(days);
+        mFindCoursesViewPager.setCurrentItem(todayIndex);
     }
 
     @Override
@@ -84,7 +86,7 @@ public class FindCoursesFragment extends BaseHomeFragment implements FindCourses
     }
 
     @Override
-    public List<Course> getCoursesForDay(long dayStartTime, long dayEndTime) {
+    public List<Event> getCoursesForDay(long dayStartTime, long dayEndTime) {
         return mFindCoursesPresenter.getCoursesForDay(dayStartTime, dayEndTime);
     }
 

@@ -2,6 +2,7 @@ package com.gym.app.parts.findcourses;
 
 import com.gym.app.data.model.Course;
 import com.gym.app.data.model.Day;
+import com.gym.app.data.model.Event;
 
 import java.util.List;
 
@@ -14,11 +15,11 @@ import java.util.List;
 
 public interface FindCoursesView {
 
-    void initDays(List<Day> days);
+    void initDays(List<Day> days,int todayIndex);
 
     void setLoaded();
 
     void setError();
 
-    List<Course> getCoursesForDay(long dayStartTime, long dayEndTime);
+    List<Event> getCoursesForDay(long dayStartTime, long dayEndTime);
 }
