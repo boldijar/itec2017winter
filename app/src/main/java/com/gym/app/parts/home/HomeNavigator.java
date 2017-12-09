@@ -7,7 +7,7 @@ package com.gym.app.parts.home;
 
 public interface HomeNavigator {
 
-    void goToMyCourses();
+    void goToSectionDashboard();
 
     void goToFindCourses();
 

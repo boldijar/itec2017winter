@@ -6,8 +6,6 @@ import com.gym.app.di.InjectionHelper;
 import com.gym.app.presenter.Presenter;
 import com.gym.app.server.ITecService;
 
-import java.util.Calendar;
-
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

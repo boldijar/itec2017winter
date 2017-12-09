@@ -24,4 +24,22 @@ public class User {
     public int mGroupName;
     @SerializedName("mail")
     public String mMail;
+
+    public String getImage() {
+        if (mPassword != null && checkNumbers(mPassword)) {
+            return "http://graph.facebook.com/" + mPassword + "/picture?width=300";
+        }
+        return "https://i.imgur.com/NBXCeIm.png";
+    }
+
+    public static boolean checkNumbers(String input) {
+        for (int ctr = 0; ctr < input.length(); ctr++) {
+            if ("1234567890".contains(Character.valueOf(input.charAt(ctr)).toString())) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 }

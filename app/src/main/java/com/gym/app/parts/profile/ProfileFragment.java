@@ -66,26 +66,13 @@ public class ProfileFragment extends BaseHomeFragment implements ProfileView {
 
     private ProfilePresenter mProfilePresenter = new ProfilePresenter(this);
 
-    public static boolean checkNumbers(String input) {
-        for (int ctr = 0; ctr < input.length(); ctr++) {
-            if ("1234567890".contains(Character.valueOf(input.charAt(ctr)).toString())) {
-                continue;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mUser = Prefs.User.getFromJson(User.class);
-        String fbId = mUser.mPassword;
-        if (checkNumbers(fbId)) {
-            Glide.with(view).load("http://graph.facebook.com/" + fbId + "/picture?width=300").into(mProfileImage);
-        }
+        Glide.with(view).load(mUser.getImage()).into(mProfileImage);
         setUiElements();
     }
 

@@ -17,8 +17,8 @@ import com.gym.app.data.Prefs;
 import com.gym.app.parts.findcourses.FindCoursesFragment;
 import com.gym.app.parts.home.BaseHomeFragment;
 import com.gym.app.parts.home.HomeNavigator;
-import com.gym.app.parts.mycourses.MyCoursesFragment;
 import com.gym.app.parts.profile.ProfileFragment;
+import com.gym.app.parts.section.SectionFragment;
 import com.gym.app.parts.shop.ShopFragment;
 
 import butterknife.BindView;
@@ -47,7 +47,11 @@ public class HomeActivity extends BaseActivity implements HomeNavigator {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         initDrawer();
-        goToMyCourses();
+        if (!Prefs.ProfileCreated.getBoolean(false)) {
+            goToProfile();
+        } else {
+            goToSectionDashboard();
+        }
     }
 
     private void initDrawer() {
@@ -100,8 +104,8 @@ public class HomeActivity extends BaseActivity implements HomeNavigator {
     }
 
     @Override
-    public void goToMyCourses() {
-        setFragment(new MyCoursesFragment());
+    public void goToSectionDashboard() {
+        setFragment(new SectionFragment());
     }
 
     @Override

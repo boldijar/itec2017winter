@@ -37,7 +37,7 @@ public class DrawerFragment extends BaseFragment {
 
     @OnClick({
             R.id.drawer_find_courses,
-            R.id.drawer_my_courses,
+            R.id.drawer_section,
             R.id.drawer_profile,
             R.id.drawer_shop,
             R.id.drawer_logout
@@ -47,8 +47,8 @@ public class DrawerFragment extends BaseFragment {
             case R.id.drawer_find_courses:
                 mHomeNavigator.goToFindCourses();
                 return;
-            case R.id.drawer_my_courses:
-                mHomeNavigator.goToMyCourses();
+            case R.id.drawer_section:
+                mHomeNavigator.goToSectionDashboard();
                 return;
             case R.id.drawer_profile:
                 mHomeNavigator.goToProfile();

@@ -6,11 +6,14 @@ import com.gym.app.data.observables.SaveProductsObservable;
 import com.gym.app.data.observables.UpdateCourseObservable;
 import com.gym.app.parts.authentication.AuthenticationActivity;
 import com.gym.app.parts.authentication.AuthenticationPresenter;
+import com.gym.app.parts.authentication.register.RegisterPresenter;
 import com.gym.app.parts.findcourses.FindCoursesPresenter;
 import com.gym.app.parts.findcourses.day_courses.DayCoursesPresenter;
-import com.gym.app.parts.authentication.register.RegisterPresenter;
 import com.gym.app.parts.mycourses.MyCoursesPresenter;
 import com.gym.app.parts.profile.ProfilePresenter;
+import com.gym.app.parts.section.LoadMessagesObservable;
+import com.gym.app.parts.section.LoadSectionUserObservable;
+import com.gym.app.parts.section.SectionPresenter;
 import com.gym.app.parts.shop.ShopPresenter;
 
 import dagger.Component;
@@ -41,4 +44,10 @@ public interface ApplicationComponent {
     void inject(AuthenticationActivity authenticationActivity);
 
     void inject(ProfilePresenter profilePresenter);
+
+    void inject(LoadSectionUserObservable loadSectionUserObservable);
+
+    void inject(LoadMessagesObservable loadMessagesObservable);
+
+    void inject(SectionPresenter sectionPresenter);
 }

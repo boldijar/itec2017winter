@@ -63,7 +63,9 @@
     <string name="year">Year</string>
     <string name="section">Section</string>
     <string name="group_name">Group</string>
-    <string name="cantupdate">Can\'t update profile</string>Copy Code
+    <string name="cantupdate">Can\'t update profile</string>
+    <string name="section_dashboard">Section dashboard</string>
+    <string name="chat_message">Your chat message here..</string>Copy Code
 
 
 </resources>
