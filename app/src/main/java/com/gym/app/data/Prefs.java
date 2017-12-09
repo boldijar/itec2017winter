@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 public enum Prefs {
 
     Token,
-    User;
+    User, ProfileCreated;
 
     Prefs(String defaultValue) {
         mDefaultValue = defaultValue;

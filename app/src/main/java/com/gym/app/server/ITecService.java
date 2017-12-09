@@ -11,6 +11,8 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ITecService {
@@ -20,6 +22,9 @@ public interface ITecService {
 
     @POST("api.php/user")
     Completable addUser(@Body User user);
+
+    @PUT("api.php/user/{id}")
+    Completable updateUser(@Body User user, @Path("id") int id);
 
     //http://192.168.1.122/itec/api.php/user?filter[]=username,eq,bolnizar&filter[]=password,eq,123123
     @GET("api.php/user")

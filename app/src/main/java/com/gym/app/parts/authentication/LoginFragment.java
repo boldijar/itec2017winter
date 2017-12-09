@@ -56,6 +56,10 @@ public class LoginFragment extends BaseFragment {
                 mPasswordInput.getText().toString());
     }
 
+    @OnClick(R.id.register_login_facebook)
+    void fbLogin(){
+        ((AuthenticationActivity) getActivity()).doFacebookLogin();
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_login;

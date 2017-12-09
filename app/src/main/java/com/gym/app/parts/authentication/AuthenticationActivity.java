@@ -7,6 +7,12 @@ import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.gym.app.R;
 import com.gym.app.activities.BaseActivity;
 import com.gym.app.activities.HomeActivity;
@@ -15,6 +21,7 @@ import com.gym.app.data.model.User;
 import com.gym.app.di.InjectionHelper;
 import com.gym.app.server.ITecService;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +33,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 
 public class AuthenticationActivity extends BaseActivity implements AuthenticationNavigation, AuthenticationView {
@@ -44,6 +52,7 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
 
     @Inject
     ITecService mITecService;
+    private CallbackManager mCallbackManager;
 
     public static Intent createIntent(Context context) {
         return new Intent(context, AuthenticationActivity.class);
@@ -61,6 +70,7 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
         ButterKnife.bind(this);
+        initFb();
         InjectionHelper.getApplicationComponent().inject(this);
         mAuthenticationPresenter = new AuthenticationPresenter(this);
         mAuthenticationPagerAdapter = new AuthenticationPagerAdapter(getSupportFragmentManager());
@@ -121,6 +131,29 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
                 });
     }
 
+    private void initFb() {
+        mCallbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(mCallbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        gotUserId(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Timber.e(exception);
+                        showMessage(R.string.fb_login_error);
+                    }
+                });
+    }
+
     public void doLogin(String email, String password) {
         mAuthenticationPresenter.login(email, password);
     }
@@ -151,5 +184,23 @@ public class AuthenticationActivity extends BaseActivity implements Authenticati
     protected void onDestroy() {
         super.onDestroy();
         mAuthenticationPresenter.destroySubscriptions();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void gotUserId(AccessToken token) {
+        mAuthenticationPresenter.facebookLogin(token);
+    }
+
+    public void doFacebookLogin() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) {
+            gotUserId(accessToken);
+        }
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
     }
 }
