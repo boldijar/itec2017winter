@@ -14,12 +14,10 @@ import com.gym.app.parts.event.EventPresenter;
 import com.gym.app.parts.event.SuggestionPresenter;
 import com.gym.app.parts.findcourses.FindCoursesPresenter;
 import com.gym.app.parts.findcourses.day_courses.DayCoursesPresenter;
-import com.gym.app.parts.mycourses.MyCoursesPresenter;
 import com.gym.app.parts.profile.ProfilePresenter;
 import com.gym.app.parts.section.LoadMessagesObservable;
 import com.gym.app.parts.section.LoadSectionUserObservable;
 import com.gym.app.parts.section.SectionPresenter;
-import com.gym.app.parts.shop.ShopPresenter;
 
 import dagger.Component;
 
@@ -30,7 +28,6 @@ public interface ApplicationComponent {
 
     void inject(AuthenticationPresenter authenticationPresenter);
 
-    void inject(ShopPresenter shopPresenter);
 
     void inject(SaveProductsObservable saveProductsObservable);
 
@@ -44,7 +41,6 @@ public interface ApplicationComponent {
 
     void inject(UpdateCourseObservable updateCourseObservable);
 
-    void inject(MyCoursesPresenter myCoursesPresenter);
 
     void inject(AuthenticationActivity authenticationActivity);
 

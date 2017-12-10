@@ -25,7 +25,6 @@ import com.gym.app.parts.home.BaseHomeFragment;
 import com.gym.app.parts.home.HomeNavigator;
 import com.gym.app.parts.profile.ProfileFragment;
 import com.gym.app.parts.section.SectionFragment;
-import com.gym.app.parts.shop.ShopFragment;
 import com.gym.app.server.ITecService;
 
 import java.util.List;
@@ -181,7 +180,6 @@ public class HomeActivity extends BaseActivity implements HomeNavigator {
 
     @Override
     public void goToShop() {
-        setFragment(new ShopFragment());
     }
 
     @Override

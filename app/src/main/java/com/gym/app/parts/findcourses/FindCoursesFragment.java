@@ -8,13 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.gym.app.R;
-import com.gym.app.data.model.Course;
 import com.gym.app.data.model.Day;
 import com.gym.app.data.model.Event;
 import com.gym.app.parts.event.SuggestionActivity;
 import com.gym.app.parts.home.BaseHomeFragment;
 import com.gym.app.view.EmptyLayout;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,7 +24,6 @@ import butterknife.OnClick;
 
 /**
  * @author Paul
- *
  * @since 2017.10.25
  */
 
@@ -70,7 +70,7 @@ public class FindCoursesFragment extends BaseHomeFragment implements FindCourses
 
 
     @Override
-    public void initDays(List<Day> days,int todayIndex) {
+    public void initDays(List<Day> days, int todayIndex) {
         mDayPagerAdapter.setDaysList(days);
         mFindCoursesViewPager.setCurrentItem(todayIndex);
     }
@@ -89,7 +89,14 @@ public class FindCoursesFragment extends BaseHomeFragment implements FindCourses
 
     @Override
     public List<Event> getCoursesForDay(long dayStartTime, long dayEndTime) {
-        return mFindCoursesPresenter.getCoursesForDay(dayStartTime, dayEndTime);
+        List<Event> events = mFindCoursesPresenter.getCoursesForDay(dayStartTime, dayEndTime);
+        Collections.sort(events, new Comparator<Event>() {
+            @Override
+            public int compare(Event event, Event t1) {
+                return (int) (event.mTime - t1.mTime);
+            }
+        });
+        return events;
     }
 
     private void initPager() {
@@ -115,8 +122,9 @@ public class FindCoursesFragment extends BaseHomeFragment implements FindCourses
             }
         });
     }
+
     @OnClick(R.id.fab)
-    void fabClick(){
+    void fabClick() {
         startActivity(SuggestionActivity.createIntent(getContext()));
     }
 }
