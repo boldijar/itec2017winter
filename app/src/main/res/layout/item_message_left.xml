@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:padding="16dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/message_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/user"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="56dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/message_text"
+            fontPath="fonts/Lato-Light.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:textColor="@color/black"
+            android:textColorLink="@color/colorPrimary"
+            tools:ignore="MissingPrefix"
+            tools:text="Hi what are u doing"/>
+
+        <TextView
+            android:id="@+id/message_time"
+            fontPath="fonts/Lato-Light.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha=".7"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            tools:ignore="MissingPrefix"
+            tools:text="Hi what are u doing"/>
+    </LinearLayout>
+</FrameLayout>
