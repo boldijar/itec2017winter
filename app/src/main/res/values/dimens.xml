@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Authentication activity -->
-
     <dimen name="logo_authentication_margin">40dp</dimen>
     <dimen name="second_key_line">54dp</dimen>
     <dimen name="primary_margin">16dp</dimen>
-    <dimen name="authentication_pager_height">280dp</dimen>
     <dimen name="authentication_button_text_size">16sp</dimen>
     <dimen name="authentication_input_size">16sp</dimen>
     <dimen name="small_margin">8dp</dimen>
-    <dimen name="secondary_margin">32dp</dimen>
     <dimen name="edit_text_height">48dp</dimen>
-    <dimen name="profile_picture_size">180dp</dimen>
-    <dimen name="save_changes_button_text_size">16sp</dimen>
     <dimen name="no_dimension">0dp</dimen>
-    <dimen name="standard_elevation">4dp</dimen>
-    <dimen name="adjustment_margin">24dp</dimen>
 </resources>

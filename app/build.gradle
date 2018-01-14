@@ -13,7 +13,6 @@ ext {
     retrofitVersion = '2.3.0'
     okHttpVersion = '3.4.1'
     daggerVersion = '2.7'
-    roomVersion = '1.0.0-beta1'
     butterknifeVersion = '8.8.1'
     glideVersion = '4.2.0'
 }
@@ -58,8 +57,6 @@ dependencies {
     compile "io.reactivex.rxjava2:rxandroid:2.0.1"
     compile 'io.reactivex:rxandroid:1.2.1'
     compile "com.jakewharton:butterknife:$butterknifeVersion"
-    compile "android.arch.persistence.room:runtime:$roomVersion"
-    compile "android.arch.persistence.room:rxjava2:$roomVersion"
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
     compile "com.github.bumptech.glide:glide:$glideVersion"
@@ -67,10 +64,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.2.0'
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
-    implementation 'com.facebook.android:facebook-login:[4,5)'
-    compile 'com.google.firebase:firebase-messaging:11.6.2'
-    compile 'com.google.firebase:firebase-core:11.6.2'
 
 }
 
